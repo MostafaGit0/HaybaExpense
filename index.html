@@ -274,13 +274,16 @@
             const scriptURL = 'https://script.google.com/macros/s/AKfycbxfmtQdADJUYbNtj4djEaer8gXT3DDvVa47My0f-nJazykgtne5tvA5URk3L1zMXPGx/exec';
             
             // Send data to Google Sheets via the Apps Script
+            const formData = new FormData();
+            formData.append('amount', amount);
+            formData.append('description', description);
+            formData.append('cadence', cadence);
+
             fetch(scriptURL, {
                 method: 'POST',
-                body: JSON.stringify({ amount, description, cadence }),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
+                body: formData
             })
+
             .then(response => response.json())
             .then(data => {
                 // Hide loader
