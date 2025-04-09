@@ -12,7 +12,7 @@
             box-sizing: border-box;
             font-family: 'Poppins', sans-serif;
         }
-        
+
         body {
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             min-height: 100vh;
@@ -21,7 +21,7 @@
             align-items: center;
             padding: 20px;
         }
-        
+
         .container {
             background-color: white;
             border-radius: 20px;
@@ -33,14 +33,14 @@
             opacity: 0;
             animation: fadeIn 0.8s forwards;
         }
-        
+
         @keyframes fadeIn {
             to {
                 transform: translateY(0);
                 opacity: 1;
             }
         }
-        
+
         .header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -49,13 +49,13 @@
             position: relative;
             overflow: hidden;
         }
-        
+
         .header h2 {
             position: relative;
             z-index: 1;
             font-weight: 600;
         }
-        
+
         .header p {
             margin-top: 5px;
             font-size: 0.9rem;
@@ -63,22 +63,22 @@
             position: relative;
             z-index: 1;
         }
-        
+
         .form-container {
             padding: 30px;
         }
-        
+
         .input-group {
             margin-bottom: 20px;
         }
-        
+
         .input-group label {
             display: block;
             margin-bottom: 8px;
             font-weight: 500;
             color: #333;
         }
-        
+
         .input-field {
             width: 100%;
             padding: 12px 15px;
@@ -87,13 +87,13 @@
             font-size: 16px;
             transition: all 0.3s ease;
         }
-        
+
         .input-field:focus {
             border-color: #667eea;
             outline: none;
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.25);
         }
-        
+
         .submit-btn {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -108,16 +108,16 @@
             position: relative;
             overflow: hidden;
         }
-        
+
         .submit-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
         }
-        
+
         .submit-btn:active {
             transform: translateY(0);
         }
-        
+
         .loader {
             display: none;
             width: 30px;
@@ -132,13 +132,13 @@
             margin-top: -15px;
             margin-left: -15px;
         }
-        
+
         @keyframes spin {
             to {
                 transform: rotate(360deg);
             }
         }
-        
+
         .notification {
             position: fixed;
             top: 20px;
@@ -152,19 +152,19 @@
             z-index: 1000;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
-        
+
         .notification.success {
             background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
         }
-        
+
         .notification.error {
             background: linear-gradient(135deg, #f5567b 0%, #fd8263 100%);
         }
-        
+
         .notification.show {
             transform: translateX(0);
         }
-        
+
         .bubble {
             position: absolute;
             background: rgba(255, 255, 255, 0.1);
@@ -173,7 +173,7 @@
             transform: scale(0);
             animation: bubble 4s ease-in-out infinite;
         }
-        
+
         @keyframes bubble {
             0% {
                 transform: scale(0);
@@ -201,12 +201,12 @@
                     <label for="amount">Amount</label>
                     <input type="number" id="amount" class="input-field" placeholder="Enter amount" required>
                 </div>
-                
+
                 <div class="input-group">
                     <label for="description">What is it for?</label>
                     <input type="text" id="description" class="input-field" placeholder="E.g., Rent, Groceries" required>
                 </div>
-                
+
                 <div class="input-group">
                     <label for="cadence">Cadence</label>
                     <select id="cadence" class="input-field" required>
@@ -218,63 +218,58 @@
                         <option value="One time">One time</option>
                     </select>
                 </div>
-                                               
+
                 <button type="submit" class="submit-btn" id="submitBtn">
                     <span>Submit Data</span>
                     <div class="loader" id="loader"></div>
                 </button>
             </form>
+
+            <!-- New "Check Total" section -->
+            <div class="input-group" style="margin-top: 25px;">
+                <button class="submit-btn" onclick="getTotal()" id="checkTotalBtn">
+                    <span>Check Total</span>
+                </button>
+                <p id="totalDisplay" style="margin-top: 10px; font-weight: 500; color: #333;"></p>
+            </div>
         </div>
     </div>
-    
+
     <div class="notification" id="notification"></div>
-    
+
     <script>
         // Create bubble animations in header
         const header = document.getElementById('header');
-        
-        // Create bubbles
+
         for (let i = 0; i < 8; i++) {
             const bubble = document.createElement('div');
             bubble.classList.add('bubble');
-            
-            // Random size between 20px and 80px
             const size = Math.random() * 60 + 20;
             bubble.style.width = `${size}px`;
             bubble.style.height = `${size}px`;
-            
-            // Random position within header
             bubble.style.left = `${Math.random() * 100}%`;
             bubble.style.top = `${Math.random() * 100}%`;
-            
-            // Random delay
             bubble.style.animationDelay = `${Math.random() * 2}s`;
-            
             header.appendChild(bubble);
         }
-        
+
         // Form submission
         document.getElementById('dataForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            
+
             const submitBtn = document.getElementById('submitBtn');
             const loader = document.getElementById('loader');
             const btnText = submitBtn.querySelector('span');
-            
-            // Get form data
+
             const amount = document.getElementById('amount').value;
             const description = document.getElementById('description').value;
             const cadence = document.getElementById('cadence').value;
 
-            
-            // Show loader
             btnText.style.opacity = '0';
             loader.style.display = 'block';
-            
-            // Replace with your deployed Google Apps Script Web App URL
+
             const scriptURL = 'https://script.google.com/macros/s/AKfycbxfmtQdADJUYbNtj4djEaer8gXT3DDvVa47My0f-nJazykgtne5tvA5URk3L1zMXPGx/exec';
-            
-            // Send data to Google Sheets via the Apps Script
+
             const formData = new FormData();
             formData.append('amount', amount);
             formData.append('description', description);
@@ -284,59 +279,60 @@
                 method: 'POST',
                 body: formData
             })
-
             .then(response => response.json())
             .then(data => {
-                // Hide loader
                 btnText.style.opacity = '1';
                 loader.style.display = 'none';
-                
-                // Show success notification
                 showNotification('Data successfully submitted!', 'success');
-                
-                // Reset form
                 document.getElementById('dataForm').reset();
             })
             .catch(error => {
-                // Hide loader
                 btnText.style.opacity = '1';
                 loader.style.display = 'none';
-                
-                // Show error notification
                 showNotification('Error submitting data. Please try again.', 'error');
                 console.error('Error:', error);
             });
         });
-        
-        // Notification function
+
         function showNotification(message, type) {
             const notification = document.getElementById('notification');
             notification.textContent = message;
             notification.className = `notification ${type}`;
-            
-            // Show notification
-            setTimeout(() => {
-                notification.classList.add('show');
-            }, 100);
-            
-            // Hide notification after 4 seconds
-            setTimeout(() => {
-                notification.classList.remove('show');
-            }, 4000);
+            setTimeout(() => notification.classList.add('show'), 100);
+            setTimeout(() => notification.classList.remove('show'), 4000);
         }
-        
-        // Add animation to input fields when focused
+
         const inputFields = document.querySelectorAll('.input-field');
-        
+
         inputFields.forEach(input => {
             input.addEventListener('focus', function() {
                 this.parentElement.classList.add('focused');
             });
-            
             input.addEventListener('blur', function() {
                 this.parentElement.classList.remove('focused');
             });
         });
+
+        // Get total from Google Sheets
+        function getTotal() {
+            const totalDisplay = document.getElementById('totalDisplay');
+            const checkTotalBtn = document.getElementById('checkTotalBtn');
+            const btnText = checkTotalBtn.querySelector('span');
+
+            btnText.textContent = 'Loading...';
+
+            fetch('https://script.google.com/macros/s/AKfycbxfmtQdADJUYbNtj4djEaer8gXT3DDvVa47My0f-nJazykgtne5tvA5URk3L1zMXPGx/exec?action=getTotal')
+                .then(response => response.text())
+                .then(data => {
+                    totalDisplay.textContent = `Total Spent: $${data}`;
+                    btnText.textContent = 'Check Total';
+                })
+                .catch(error => {
+                    totalDisplay.textContent = 'Error getting total.';
+                    btnText.textContent = 'Check Total';
+                    console.error('Total fetch error:', error);
+                });
+        }
     </script>
 </body>
 </html>
