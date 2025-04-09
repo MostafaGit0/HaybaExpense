@@ -265,21 +265,34 @@
       header.appendChild(bubble);
     }
 
-    document.getElementById('cadence').addEventListener('change', function () {
-      const durationGroup = document.getElementById('durationGroup');
-      const durationAmount = document.getElementById('durationAmount');
-      const durationType = document.getElementById('durationType');
+document.getElementById('cadence').addEventListener('change', function () {
+  const durationGroup = document.getElementById('durationGroup');
+  const durationAmount = document.getElementById('durationAmount');
+  const durationType = document.getElementById('durationType');
 
-      if (this.value === 'One time') {
-        durationGroup.style.display = 'block';
-        durationType.value = 'N/A';
-        durationAmount.value = 'N/A';
-      } else {
-        durationGroup.style.display = 'none';
-        durationType.value = 'N/A';
-        durationAmount.value = 'N/A';
-      }
-    });
+  if (this.value === 'One time') {
+    durationGroup.style.display = 'block';
+    durationType.value = 'N/A';
+    durationAmount.value = 'N/A';
+  } else {
+    durationGroup.style.display = 'none';
+    durationType.value = 'N/A';
+    durationAmount.value = 'N/A';
+  }
+});
+
+// Auto-fill "1" if type is not N/A
+document.getElementById('durationType').addEventListener('change', function () {
+  const durationAmount = document.getElementById('durationAmount');
+  if (this.value !== 'N/A') {
+    if (durationAmount.value === 'N/A' || durationAmount.value.trim() === '') {
+      durationAmount.value = '1';
+    }
+  } else {
+    durationAmount.value = 'N/A';
+  }
+});
+
 
     document.getElementById('dataForm').addEventListener('submit', function (e) {
       e.preventDefault();
