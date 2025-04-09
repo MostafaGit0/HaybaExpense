@@ -1,338 +1,380 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hayba Expenses</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hayba Expenses</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
 
-        body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
+    body {
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
 
-        .container {
-            background-color: white;
-            border-radius: 20px;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 550px;
-            overflow: hidden;
-            transform: translateY(20px);
-            opacity: 0;
-            animation: fadeIn 0.8s forwards;
-        }
+    .container {
+      background-color: white;
+      border-radius: 20px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 550px;
+      overflow: hidden;
+      transform: translateY(20px);
+      opacity: 0;
+      animation: fadeIn 0.8s forwards;
+    }
 
-        @keyframes fadeIn {
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
+    @keyframes fadeIn {
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
 
-        .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 25px 30px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 25px 30px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
 
-        .header h2 {
-            position: relative;
-            z-index: 1;
-            font-weight: 600;
-        }
+    .header h2 {
+      position: relative;
+      z-index: 1;
+      font-weight: 600;
+    }
 
-        .header p {
-            margin-top: 5px;
-            font-size: 0.9rem;
-            opacity: 0.9;
-            position: relative;
-            z-index: 1;
-        }
+    .header p {
+      margin-top: 5px;
+      font-size: 0.9rem;
+      opacity: 0.9;
+      position: relative;
+      z-index: 1;
+    }
 
-        .form-container {
-            padding: 30px;
-        }
+    .form-container {
+      padding: 30px;
+    }
 
-        .input-group {
-            margin-bottom: 20px;
-        }
+    .input-group {
+      margin-bottom: 20px;
+    }
 
-        .input-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: #333;
-        }
+    .input-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: #333;
+    }
 
-        .input-field {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #e1e1e1;
-            border-radius: 10px;
-            font-size: 16px;
-            transition: all 0.3s ease;
-        }
+    .input-field {
+      width: 100%;
+      padding: 12px 15px;
+      border: 2px solid #e1e1e1;
+      border-radius: 10px;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
 
-        .input-field:focus {
-            border-color: #667eea;
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.25);
-        }
+    .input-field:focus {
+      border-color: #667eea;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.25);
+    }
 
-        .submit-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 14px 20px;
-            width: 100%;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
+    .submit-btn {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 14px 20px;
+      width: 100%;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
 
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
 
-        .submit-btn:active {
-            transform: translateY(0);
-        }
+    .submit-btn:active {
+      transform: translateY(0);
+    }
 
-        .loader {
-            display: none;
-            width: 30px;
-            height: 30px;
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top-color: white;
-            animation: spin 1s ease-in-out infinite;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            margin-top: -15px;
-            margin-left: -15px;
-        }
+    .loader {
+      display: none;
+      width: 30px;
+      height: 30px;
+      border: 4px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 1s ease-in-out infinite;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-top: -15px;
+      margin-left: -15px;
+    }
 
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
 
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 15px 20px;
-            border-radius: 10px;
-            color: white;
-            font-weight: 500;
-            transform: translateX(150%);
-            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            z-index: 1000;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 15px 20px;
+      border-radius: 10px;
+      color: white;
+      font-weight: 500;
+      transform: translateX(150%);
+      transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      z-index: 1000;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
 
-        .notification.success {
-            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
-        }
+    .notification.success {
+      background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+    }
 
-        .notification.error {
-            background: linear-gradient(135deg, #f5567b 0%, #fd8263 100%);
-        }
+    .notification.error {
+      background: linear-gradient(135deg, #f5567b 0%, #fd8263 100%);
+    }
 
-        .notification.show {
-            transform: translateX(0);
-        }
+    .notification.show {
+      transform: translateX(0);
+    }
 
-        .bubble {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            pointer-events: none;
-            transform: scale(0);
-            animation: bubble 4s ease-in-out infinite;
-        }
+    .bubble {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      pointer-events: none;
+      transform: scale(0);
+      animation: bubble 4s ease-in-out infinite;
+    }
 
-        @keyframes bubble {
-            0% {
-                transform: scale(0);
-                opacity: 0.5;
-            }
-            50% {
-                opacity: 0.2;
-            }
-            100% {
-                transform: scale(1);
-                opacity: 0;
-            }
-        }
-    </style>
+    @keyframes bubble {
+      0% {
+        transform: scale(0);
+        opacity: 0.5;
+      }
+      50% {
+        opacity: 0.2;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 0;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header" id="header">
-            <h2>Hayba Expenses</h2>
-            <p>Submit information to Google Sheets</p>
-        </div>
-        <div class="form-container">
-            <form id="dataForm">
-                <div class="input-group">
-                    <label for="amount">Amount</label>
-                    <input type="number" id="amount" class="input-field" placeholder="Enter amount" required>
-                </div>
-
-                <div class="input-group">
-                    <label for="description">What is it for?</label>
-                    <input type="text" id="description" class="input-field" placeholder="E.g., Rent, Groceries" required>
-                </div>
-
-                <div class="input-group">
-                    <label for="cadence">Cadence</label>
-                    <select id="cadence" class="input-field" required>
-                        <option value="" disabled selected>Select cadence</option>
-                        <option value="Weekly">Weekly</option>
-                        <option value="Biweekly">Biweekly</option>
-                        <option value="Monthly">Monthly</option>
-                        <option value="Yearly">Yearly</option>
-                        <option value="One time">One time</option>
-                    </select>
-                </div>
-
-                <button type="submit" class="submit-btn" id="submitBtn">
-                    <span>Submit Data</span>
-                    <div class="loader" id="loader"></div>
-                </button>
-            </form>
-
-            <!-- New "Check Total" section -->
-            <div class="input-group" style="margin-top: 25px;">
-                <button class="submit-btn" onclick="getTotal()" id="checkTotalBtn">
-                    <span>Check Total</span>
-                </button>
-                <p id="totalDisplay" style="margin-top: 10px; font-weight: 500; color: #333;"></p>
-            </div>
-        </div>
+  <div class="container">
+    <div class="header" id="header">
+      <h2>Hayba Expenses</h2>
+      <p>Submit information to Google Sheets</p>
     </div>
+    <div class="form-container">
+      <form id="dataForm">
+        <div class="input-group">
+          <label for="amount">Amount</label>
+          <input type="number" id="amount" class="input-field" placeholder="Enter amount" required />
+        </div>
 
-    <div class="notification" id="notification"></div>
+        <div class="input-group">
+          <label for="description">What is it for?</label>
+          <input type="text" id="description" class="input-field" placeholder="E.g., Rent, Groceries" required />
+        </div>
 
-    <script>
-        // Create bubble animations in header
-        const header = document.getElementById('header');
+        <div class="input-group">
+          <label for="cadence">Cadence</label>
+          <select id="cadence" class="input-field" required>
+            <option value="" disabled selected>Select cadence</option>
+            <option value="Weekly">Weekly</option>
+            <option value="Biweekly">Biweekly</option>
+            <option value="Monthly">Monthly</option>
+            <option value="Yearly">Yearly</option>
+            <option value="One time">One time</option>
+          </select>
+        </div>
 
-        for (let i = 0; i < 8; i++) {
-            const bubble = document.createElement('div');
-            bubble.classList.add('bubble');
-            const size = Math.random() * 60 + 20;
-            bubble.style.width = `${size}px`;
-            bubble.style.height = `${size}px`;
-            bubble.style.left = `${Math.random() * 100}%`;
-            bubble.style.top = `${Math.random() * 100}%`;
-            bubble.style.animationDelay = `${Math.random() * 2}s`;
-            header.appendChild(bubble);
+        <div class="input-group" id="durationGroup" style="display: none;">
+          <label for="durationType">How long?</label>
+          <div style="display: flex; gap: 10px;">
+            <input type="text" id="durationAmount" class="input-field" style="flex: 1;" value="N/A" />
+            <select id="durationType" class="input-field" style="flex: 1;">
+              <option value="N/A" selected>N/A</option>
+              <option value="day">Day</option>
+              <option value="week">Week</option>
+              <option value="month">Month</option>
+              <option value="year">Year</option>
+            </select>
+          </div>
+        </div>
+
+        <button type="submit" class="submit-btn" id="submitBtn">
+          <span>Submit Data</span>
+          <div class="loader" id="loader"></div>
+        </button>
+      </form>
+
+      <div class="input-group" style="margin-top: 25px;">
+        <button class="submit-btn" onclick="getTotal()" id="checkTotalBtn">
+          <span>Check Total</span>
+        </button>
+        <p id="totalDisplay" style="margin-top: 10px; font-weight: 500; color: #333;"></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="notification" id="notification"></div>
+
+  <script>
+    const header = document.getElementById('header');
+
+    for (let i = 0; i < 8; i++) {
+      const bubble = document.createElement('div');
+      bubble.classList.add('bubble');
+      const size = Math.random() * 60 + 20;
+      bubble.style.width = `${size}px`;
+      bubble.style.height = `${size}px`;
+      bubble.style.left = `${Math.random() * 100}%`;
+      bubble.style.top = `${Math.random() * 100}%`;
+      bubble.style.animationDelay = `${Math.random() * 2}s`;
+      header.appendChild(bubble);
+    }
+
+    document.getElementById('cadence').addEventListener('change', function () {
+      const durationGroup = document.getElementById('durationGroup');
+      const durationAmount = document.getElementById('durationAmount');
+      const durationType = document.getElementById('durationType');
+
+      if (this.value === 'One time') {
+        durationGroup.style.display = 'block';
+        durationType.value = 'N/A';
+        durationAmount.value = 'N/A';
+      } else {
+        durationGroup.style.display = 'none';
+        durationType.value = 'N/A';
+        durationAmount.value = 'N/A';
+      }
+    });
+
+    document.getElementById('dataForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const submitBtn = document.getElementById('submitBtn');
+      const loader = document.getElementById('loader');
+      const btnText = submitBtn.querySelector('span');
+
+      const amount = document.getElementById('amount').value;
+      const description = document.getElementById('description').value;
+      const cadence = document.getElementById('cadence').value;
+
+      let duration = 'N/A';
+      const durationType = document.getElementById('durationType').value;
+      let durationAmount = document.getElementById('durationAmount').value.trim();
+
+      if (cadence === 'One time') {
+        if (durationType !== 'N/A') {
+          if (durationAmount === '' || isNaN(durationAmount)) {
+            durationAmount = '1';
+          }
+          duration = `${durationAmount} ${durationType}${durationAmount === '1' ? '' : 's'}`;
+        } else {
+          duration = 'N/A';
         }
+      }
 
-        // Form submission
-        document.getElementById('dataForm').addEventListener('submit', function(e) {
-            e.preventDefault();
+      btnText.style.opacity = '0';
+      loader.style.display = 'block';
 
-            const submitBtn = document.getElementById('submitBtn');
-            const loader = document.getElementById('loader');
-            const btnText = submitBtn.querySelector('span');
+      const scriptURL = 'https://script.google.com/macros/s/AKfycbxfmtQdADJUYbNtj4djEaer8gXT3DDvVa47My0f-nJazykgtne5tvA5URk3L1zMXPGx/exec';
+      const formData = new FormData();
+      formData.append('amount', amount);
+      formData.append('description', description);
+      formData.append('cadence', cadence);
+      formData.append('duration', duration);
 
-            const amount = document.getElementById('amount').value;
-            const description = document.getElementById('description').value;
-            const cadence = document.getElementById('cadence').value;
+      fetch(scriptURL, {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        btnText.style.opacity = '1';
+        loader.style.display = 'none';
+        showNotification('Data successfully submitted!', 'success');
+        document.getElementById('dataForm').reset();
+        document.getElementById('durationGroup').style.display = 'none';
+      })
+      .catch(error => {
+        btnText.style.opacity = '1';
+        loader.style.display = 'none';
+        showNotification('Error submitting data. Please try again.', 'error');
+        console.error('Error:', error);
+      });
+    });
 
-            btnText.style.opacity = '0';
-            loader.style.display = 'block';
+    function showNotification(message, type) {
+      const notification = document.getElementById('notification');
+      notification.textContent = message;
+      notification.className = `notification ${type}`;
+      setTimeout(() => notification.classList.add('show'), 100);
+      setTimeout(() => notification.classList.remove('show'), 4000);
+    }
 
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbxfmtQdADJUYbNtj4djEaer8gXT3DDvVa47My0f-nJazykgtne5tvA5URk3L1zMXPGx/exec';
+    const inputFields = document.querySelectorAll('.input-field');
 
-            const formData = new FormData();
-            formData.append('amount', amount);
-            formData.append('description', description);
-            formData.append('cadence', cadence);
+    inputFields.forEach(input => {
+      input.addEventListener('focus', function () {
+        this.parentElement.classList.add('focused');
+      });
+      input.addEventListener('blur', function () {
+        this.parentElement.classList.remove('focused');
+      });
+    });
 
-            fetch(scriptURL, {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                btnText.style.opacity = '1';
-                loader.style.display = 'none';
-                showNotification('Data successfully submitted!', 'success');
-                document.getElementById('dataForm').reset();
-            })
-            .catch(error => {
-                btnText.style.opacity = '1';
-                loader.style.display = 'none';
-                showNotification('Error submitting data. Please try again.', 'error');
-                console.error('Error:', error);
-            });
+    function getTotal() {
+      const totalDisplay = document.getElementById('totalDisplay');
+      const checkTotalBtn = document.getElementById('checkTotalBtn');
+      const btnText = checkTotalBtn.querySelector('span');
+
+      btnText.textContent = 'Loading...';
+
+      fetch('https://script.google.com/macros/s/AKfycbxfmtQdADJUYbNtj4djEaer8gXT3DDvVa47My0f-nJazykgtne5tvA5URk3L1zMXPGx/exec?action=getTotal')
+        .then(response => response.text())
+        .then(data => {
+          totalDisplay.textContent = `Total Spent: $${data}`;
+          btnText.textContent = 'Check Total';
+        })
+        .catch(error => {
+          totalDisplay.textContent = 'Error getting total.';
+          btnText.textContent = 'Check Total';
+          console.error('Total fetch error:', error);
         });
-
-        function showNotification(message, type) {
-            const notification = document.getElementById('notification');
-            notification.textContent = message;
-            notification.className = `notification ${type}`;
-            setTimeout(() => notification.classList.add('show'), 100);
-            setTimeout(() => notification.classList.remove('show'), 4000);
-        }
-
-        const inputFields = document.querySelectorAll('.input-field');
-
-        inputFields.forEach(input => {
-            input.addEventListener('focus', function() {
-                this.parentElement.classList.add('focused');
-            });
-            input.addEventListener('blur', function() {
-                this.parentElement.classList.remove('focused');
-            });
-        });
-
-        // Get total from Google Sheets
-        function getTotal() {
-            const totalDisplay = document.getElementById('totalDisplay');
-            const checkTotalBtn = document.getElementById('checkTotalBtn');
-            const btnText = checkTotalBtn.querySelector('span');
-
-            btnText.textContent = 'Loading...';
-
-            fetch('https://script.google.com/macros/s/AKfycbxfmtQdADJUYbNtj4djEaer8gXT3DDvVa47My0f-nJazykgtne5tvA5URk3L1zMXPGx/exec?action=getTotal')
-                .then(response => response.text())
-                .then(data => {
-                    totalDisplay.textContent = `Total Spent: $${data}`;
-                    btnText.textContent = 'Check Total';
-                })
-                .catch(error => {
-                    totalDisplay.textContent = 'Error getting total.';
-                    btnText.textContent = 'Check Total';
-                    console.error('Total fetch error:', error);
-                });
-        }
-    </script>
+    }
+  </script>
 </body>
 </html>
