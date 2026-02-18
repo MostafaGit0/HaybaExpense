@@ -1,9 +1,11 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Hayba Expenses</title>
+  <title>Hayba Business Tracker</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <style>
     * {
@@ -66,6 +68,8 @@
 
     .form-container {
       padding: 30px;
+      max-height: 70vh;
+      overflow-y: auto;
     }
 
     .input-group {
@@ -94,6 +98,12 @@
       box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.25);
     }
 
+    .two-column {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
     .submit-btn {
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       color: white;
@@ -107,6 +117,7 @@
       transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
+      margin-top: 10px;
     }
 
     .submit-btn:hover {
@@ -165,88 +176,117 @@
       transform: translateX(0);
     }
 
-    .bubble {
-      position: absolute;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 50%;
-      pointer-events: none;
-      transform: scale(0);
-      animation: bubble 4s ease-in-out infinite;
+    .helper-text {
+      font-size: 0.85rem;
+      color: #666;
+      margin-top: 4px;
     }
 
-    @keyframes bubble {
-      0% {
-        transform: scale(0);
-        opacity: 0.5;
-      }
-      50% {
-        opacity: 0.2;
-      }
-      100% {
-        transform: scale(1);
-        opacity: 0;
-      }
+    .section-divider {
+      border-top: 2px solid #f0f0f0;
+      margin: 25px 0;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <div class="header" id="header">
-      <h2>Hayba Expenses</h2>
-      <p>Submit information to Google Sheets</p>
+    <div class="header">
+      <h2>Hayba Business Tracker</h2>
+      <p>Track transactions for tax purposes</p>
     </div>
     <div class="form-container">
       <form id="dataForm">
+        
+        <!-- Transaction Type -->
         <div class="input-group">
-          <label for="amount">Amount</label>
-          <input type="number" name="amount" id="amount" step="0.01" class="input-field" placeholder="Enter amount" required />
-        </div>
-
-        <div class="input-group">
-          <label for="description">What is it for?</label>
-          <input type="text" name="description" id="description" class="input-field" placeholder="E.g., Rent, Groceries" required />
-        </div>
-
-        <div class="input-group">
-          <label for="cadence">Cadence</label>
-          <select name="cadence" id="cadence" class="input-field" required>
-            <option value="" disabled selected>Select cadence</option>
-            <option value="Weekly">Weekly</option>
-            <option value="Biweekly">Biweekly</option>
-            <option value="Monthly">Monthly</option>
-            <option value="Yearly">Yearly</option>
-            <option value="One time">One time</option>
+          <label for="transactionType">Transaction Type *</label>
+          <select name="transactionType" id="transactionType" class="input-field" required>
+            <option value="" disabled selected>Select type</option>
+            <option value="Income">Income</option>
+            <option value="Expense">Expense</option>
+            <option value="Inventory Purchase">Inventory Purchase</option>
           </select>
         </div>
 
-        <div class="input-group" id="durationGroup" style="display: none;">
-          <label for="durationType">How long?</label>
-          <div style="display: flex; gap: 10px;">
-            <input type="text" id="durationAmount" class="input-field" style="flex: 1;" value="N/A" />
-            <select id="durationType" class="input-field" style="flex: 1;">
-              <option value="N/A" selected>N/A</option>
-              <option value="day">Day</option>
-              <option value="week">Week</option>
-              <option value="month">Month</option>
-              <option value="year">Year</option>
-            </select>
+        <!-- Vendor or Customer -->
+        <div class="input-group">
+          <label for="vendorCustomer">Vendor or Customer Name *</label>
+          <input type="text" name="vendorCustomer" id="vendorCustomer" class="input-field" placeholder="E.g., Amazon, John Smith" required />
+        </div>
+
+        <!-- Description -->
+        <div class="input-group">
+          <label for="description">Description *</label>
+          <input type="text" name="description" id="description" class="input-field" placeholder="E.g., Business cards, Product sale" required />
+        </div>
+
+        <!-- Category (dynamic based on transaction type) -->
+        <div class="input-group">
+          <label for="category">Category *</label>
+          <select name="category" id="category" class="input-field" required>
+            <option value="" disabled selected>Select category</option>
+          </select>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <!-- Amount -->
+        <div class="input-group">
+          <label for="amount">Amount *</label>
+          <input type="number" name="amount" id="amount" step="0.01" class="input-field" placeholder="0.00" required />
+        </div>
+
+        <!-- Quantity and Unit Cost (for Inventory) -->
+        <div class="two-column" id="inventoryFields" style="display: none;">
+          <div class="input-group">
+            <label for="quantity">Quantity</label>
+            <input type="number" name="quantity" id="quantity" step="1" class="input-field" placeholder="0" />
+          </div>
+          <div class="input-group">
+            <label for="unitCost">Unit Cost</label>
+            <input type="number" name="unitCost" id="unitCost" step="0.01" class="input-field" placeholder="0.00" />
           </div>
         </div>
 
-        <!-- This hidden field is what will actually be submitted to Google Sheets -->
-        <input type="hidden" name="duration" id="durationFinal" />
+        <div class="section-divider"></div>
+
+        <!-- Payment Method -->
+        <div class="input-group">
+          <label for="paymentMethod">Payment Method *</label>
+          <select name="paymentMethod" id="paymentMethod" class="input-field" required>
+            <option value="" disabled selected>Select payment method</option>
+            <option value="Cash">Cash</option>
+            <option value="Credit Card">Credit Card</option>
+            <option value="Debit Card">Debit Card</option>
+            <option value="Bank Transfer">Bank Transfer</option>
+            <option value="PayPal">PayPal</option>
+            <option value="Venmo">Venmo</option>
+            <option value="Check">Check</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <!-- Receipt Saved -->
+        <div class="input-group">
+          <label for="receiptSaved">Receipt Saved? *</label>
+          <select name="receiptSaved" id="receiptSaved" class="input-field" required>
+            <option value="" disabled selected>Do you have a receipt?</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+          <p class="helper-text">Keep receipts for all business expenses!</p>
+        </div>
 
         <button type="submit" class="submit-btn" id="submitBtn">
-          <span>Submit Data</span>
+          <span>Submit Transaction</span>
           <div class="loader" id="loader"></div>
         </button>
       </form>
 
       <div class="input-group" style="margin-top: 25px;">
-        <button class="submit-btn" onclick="getTotal()" id="checkTotalBtn">
-          <span>Check Total</span>
+        <button class="submit-btn" onclick="viewSheet()" type="button">
+          <span>📊 Open Google Sheet</span>
         </button>
-        <p id="totalDisplay" style="margin-top: 10px; font-weight: 500; color: #333;"></p>
       </div>
     </div>
   </div>
@@ -254,67 +294,74 @@
   <div class="notification" id="notification"></div>
 
   <script>
-    // ... (bubbles animation unchanged)
+    // Category options based on transaction type
+    const categories = {
+      'Income': ['Product Sales', 'Shipping Income'],
+      'Expense': [
+        'Advertising',
+        'Shipping Expense',
+        'Packaging Supplies',
+        'Website / Software',
+        'Equipment',
+        'Office Supplies',
+        'Bank Fees',
+        'Professional Services',
+        'Startup Costs',
+        'Utilities',
+        'Travel',
+        'Meals'
+      ],
+      'Inventory Purchase': ['Inventory']
+    };
 
-    document.getElementById('cadence').addEventListener('change', function () {
-      const durationGroup = document.getElementById('durationGroup');
-      const durationAmount = document.getElementById('durationAmount');
-      const durationType = document.getElementById('durationType');
+    // Update categories when transaction type changes
+    document.getElementById('transactionType').addEventListener('change', function() {
+      const categorySelect = document.getElementById('category');
+      const inventoryFields = document.getElementById('inventoryFields');
+      const quantityInput = document.getElementById('quantity');
+      const unitCostInput = document.getElementById('unitCost');
+      
+      // Clear existing options
+      categorySelect.innerHTML = '<option value="" disabled selected>Select category</option>';
+      
+      // Populate with relevant categories
+      const selectedType = this.value;
+      if (categories[selectedType]) {
+        categories[selectedType].forEach(cat => {
+          const option = document.createElement('option');
+          option.value = cat;
+          option.textContent = cat;
+          categorySelect.appendChild(option);
+        });
+      }
 
-      if (this.value === 'One time') {
-        durationGroup.style.display = 'block';
-        durationType.value = 'N/A';
-        durationAmount.value = 'N/A';
+      // Show/hide inventory fields
+      if (selectedType === 'Inventory Purchase') {
+        inventoryFields.style.display = 'grid';
+        quantityInput.required = true;
+        unitCostInput.required = true;
       } else {
-        durationGroup.style.display = 'none';
-        durationType.value = 'N/A';
-        durationAmount.value = 'N/A';
+        inventoryFields.style.display = 'none';
+        quantityInput.required = false;
+        unitCostInput.required = false;
+        quantityInput.value = '';
+        unitCostInput.value = '';
       }
     });
 
-    document.getElementById('durationType').addEventListener('change', function () {
-      const durationAmount = document.getElementById('durationAmount');
-      if (this.value !== 'N/A') {
-        if (durationAmount.value === 'N/A' || durationAmount.value.trim() === '') {
-          durationAmount.value = '1';
-        }
-      } else {
-        durationAmount.value = 'N/A';
-      }
-    });
-
-    document.getElementById('dataForm').addEventListener('submit', function (e) {
+    // Form submission
+    document.getElementById('dataForm').addEventListener('submit', function(e) {
       e.preventDefault();
 
       const submitBtn = document.getElementById('submitBtn');
       const loader = document.getElementById('loader');
       const btnText = submitBtn.querySelector('span');
 
-      const amount = document.getElementById('amount').value;
-      const description = document.getElementById('description').value;
-      const cadence = document.getElementById('cadence').value;
-
-      let duration = 'N/A';
-      const durationType = document.getElementById('durationType').value;
-      let durationAmount = document.getElementById('durationAmount').value.trim();
-
-      if (cadence === 'One time') {
-        if (durationType !== 'N/A') {
-          if (durationAmount === '' || isNaN(durationAmount)) {
-            durationAmount = '1';
-          }
-          duration = `${durationAmount} ${durationType}${durationAmount === '1' ? '' : 's'}`;
-        }
-      }
-
-      // Update the hidden field
-      document.getElementById('durationFinal').value = duration;
-
       btnText.style.opacity = '0';
       loader.style.display = 'block';
 
-      const scriptURL = 'https://script.google.com/macros/s/AKfycbxfmtQdADJUYbNtj4djEaer8gXT3DDvVa47My0f-nJazykgtne5tvA5URk3L1zMXPGx/exec';
-      const formData = new FormData(document.getElementById('dataForm'));
+      const scriptURL = 'https://script.google.com/macros/s/AKfycbzH5siYa1_HzN_Yw67EWyu4zaFuxskXseLEB_n2uQls3HrT5h-mnRCU-HvK-R9hMHyJ/exec';
+      const formData = new FormData(this);
 
       fetch(scriptURL, {
         method: 'POST',
@@ -324,14 +371,19 @@
       .then(data => {
         btnText.style.opacity = '1';
         loader.style.display = 'none';
-        showNotification('Data successfully submitted!', 'success');
-        document.getElementById('dataForm').reset();
-        document.getElementById('durationGroup').style.display = 'none';
+        
+        if (data.status === 'success') {
+          showNotification('Transaction recorded successfully!', 'success');
+          document.getElementById('dataForm').reset();
+          document.getElementById('inventoryFields').style.display = 'none';
+        } else {
+          showNotification('Error: ' + data.message, 'error');
+        }
       })
       .catch(error => {
         btnText.style.opacity = '1';
         loader.style.display = 'none';
-        showNotification('Error submitting data. Please try again.', 'error');
+        showNotification('Error submitting transaction. Please try again.', 'error');
         console.error('Error:', error);
       });
     });
@@ -344,24 +396,8 @@
       setTimeout(() => notification.classList.remove('show'), 4000);
     }
 
-    function getTotal() {
-      const totalDisplay = document.getElementById('totalDisplay');
-      const checkTotalBtn = document.getElementById('checkTotalBtn');
-      const btnText = checkTotalBtn.querySelector('span');
-
-      btnText.textContent = 'Loading...';
-
-      fetch('https://script.google.com/macros/s/AKfycbxfmtQdADJUYbNtj4djEaer8gXT3DDvVa47My0f-nJazykgtne5tvA5URk3L1zMXPGx/exec?action=getTotal')
-        .then(response => response.text())
-        .then(data => {
-          totalDisplay.textContent = `Total Spent: $${data}`;
-          btnText.textContent = 'Check Total';
-        })
-        .catch(error => {
-          totalDisplay.textContent = 'Error getting total.';
-          btnText.textContent = 'Check Total';
-          console.error('Total fetch error:', error);
-        });
+    function viewSheet() {
+      window.open('https://docs.google.com/spreadsheets/d/1-2RWaGdOBp8DgUXAWrxfyQxZm4HZdEX4ujxfpPfwmuY/edit', '_blank');
     }
   </script>
 </body>
